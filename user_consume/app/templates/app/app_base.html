@@ -1,0 +1,18 @@
+{% extends "app/base_app.html" %}
+
+{% block content %}
+    <h3>TODO list</h3>
+    <ul>
+        {% for list in user.lists.all %}
+            <li><a href="{% url 'todo_list' list.id %}">{{ list.title }}</a></li>
+        {% endfor %}
+    </ul>
+
+    <h3>Adicionar Cliente</h3>
+    <form method="post" action="{% url 'cadastrar_cliente' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Adicionar Cliente</button>
+    </form>
+{% endblock %}
+

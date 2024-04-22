@@ -1,0 +1,53 @@
+{% extends 'app/base_app.html' %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'app/styles.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+
+        <h2 class="title">Lista de Clientes</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Sexo</th>
+                    <th>Maioridade</th>
+                    <th>Alergia</th>
+                    <th>Vegano</th>
+                    <th>Ações</th> <!-- Adicionando uma coluna para as ações -->
+                </tr>
+            </thead>
+            <tbody>
+                {% for cliente in clientes %}
+                    <tr>
+                        <td>{{ cliente.nome }}</td>
+                        <td>{{ cliente.get_sexo_display }}</td>
+                        <td>{% if cliente.maioridade %} Sim {% else %} Não {% endif %}</td>
+                        <td>{% if cliente.alergia_gluten %} Sim {% else %} Não {% endif %}</td>
+                        <td>{% if cliente.veganos %} Sim {% else %} Não {% endif %}</td>
+                        <!-- Remove a coluna ID de Registro -->
+                        <td>
+                            <a href="{% url 'update_cliente' cliente_id=cliente.id_registro %}">Edit</a>
+                            <a href="{% url 'delete_cliente' cliente_id=cliente.id_registro %}" class="delete-button">
+                                <i class="fa fa-trash"></i> Excluir
+                            </a>
+                            <a> Pedido </a>
+                        </td>
+                        
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h2 class="title">Cadastrar Novo Cliente</h2>
+        <form method="post" action="{% url 'cadastrar-cliente' %}" class="form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="button">Adicionar Cliente</button>
+        </form>
+    </div>
+
+{% endblock %}
