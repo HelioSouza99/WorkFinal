@@ -1,0 +1,22 @@
+<!-- app/pagina_principal.html -->
+
+{% extends 'app/base_app.html' %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'app/styles.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h2 class="title">Página Principal</h2>
+        <div class="options">
+            <a href="{% url 'app_index' %}" class="option">Clientes</a>
+            <a>Pedidos</a>
+            <a>Produtos</a>
+
+        </div>
+    </div>
+{% endblock %}
+            <!-- <a href="{% url 'pedidos' %}" class="option">Pedidos</a>
+            <a href="{% url 'produtos' %}" class="option">Produtos</a> -->

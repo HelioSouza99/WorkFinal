@@ -33,13 +33,39 @@ def app_login(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('app_index')
+            return redirect('pagina_principal')
     return render(request, 'app/login.html')
 
 @login_required
 def app_logout(request):
     logout(request)
     return redirect('app_login')
+
+def pagina_principal(request):
+    return render(request, 'app/pagina_principal.html')
+
+
+def clientes(request):
+    context = {
+        'clientes': clientes,
+        'user': request.user  # Passa o usuário autenticado para o template
+    }
+    return render(request, 'app/clientes.html', context)
+
+# def pedidos(request):
+#     context = {
+#         'clientes': clientes,
+#         'user': request.user  # Passa o usuário autenticado para o template
+#     }
+#     return render(request, 'app/pedidos.html', context)
+
+# def produtos(request):
+#     context = {
+#         'clientes': clientes,
+#         'user': request.user  # Passa o usuário autenticado para o template
+#     }
+#     return render(request, 'app/produtos.html', context)
+
 
 def form_modelform(request):
     if request.method == "GET":
