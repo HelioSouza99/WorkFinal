@@ -114,3 +114,7 @@ def delete_cliente(request, cliente_id):
     return redirect('app_index')
 
 
+def delete_clientetete(request, cliente_id):
+    clienteeee = Clienteeee.objects.get(id_registro=cliente_id)
+    clienteeee.delete()
+    return redirect('app_index')
