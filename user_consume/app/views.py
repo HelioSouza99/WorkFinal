@@ -41,6 +41,9 @@ def app_logout(request):
     logout(request)
     return redirect('app_login')
 
+def not_found(request, exception):
+    return app_logout(request)
+
 def pagina_principal(request):
     return render(request, 'app/pagina_principal.html')
 

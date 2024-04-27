@@ -21,3 +21,5 @@ urlpatterns = [
     path('modelform/', views.form_modelform, name ="form_modelform"),
     # path('list/<int:list_id>/', views.client_list, name='todo_list'),
 ]
+
+handler404 = 'app.views.not_found'
