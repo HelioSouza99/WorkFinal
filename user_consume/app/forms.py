@@ -26,3 +26,9 @@ class ClienteForm(forms.ModelForm):
         model = Cliente
         fields = "__all__"
         # exclude = ("id_registro")
+
+class ClientesForm(forms.ModelForm):
+    class Meta:
+        model = Clientes
+        fields = "__all__"
+        # exclude = ("id_registro")
