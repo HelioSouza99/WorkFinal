@@ -2,8 +2,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from .models import CustomUserCreationForm
 from django.shortcuts import render, redirect, HttpResponse,get_object_or_404
-from .forms import ClienteForm
-from .models import Cliente
+from .forms import ClienteForm, ProductForm
+from .models import Cliente, Product
 from django.urls import reverse_lazy
 
 # Create your views here.
@@ -87,4 +87,27 @@ def delete_cliente(request, cliente_id):
     cliente.delete()
     return redirect('app_index')
 
+def products(request):
+    produtos20 = Product.objects.all()
+    return render(request, 'app/produtos.html', context={'produtos20': produtos20})
 
+
+
+def form_modelformproduto(request):
+    if request.method == "GET":
+        form2 = ProductForm()
+
+    else:  # Método POST
+        form2 = ProductForm(request.POST)
+        if form2.is_valid():
+            produto20 = form2.save(commit=False)  # Evita salvar imediatamente para configurar id_registro
+            produto20.save()  # Salva o cliente e gera o id_registro automaticamente
+            form2.save()
+            form2 = ProductForm()
+
+    produtos20 = Product.objects.all()
+    context = {
+        'form2': form2,
+        'produtos20': produtos20
+    }
+    return render(request, 'app/formulario_modelformprod.html', context=context)

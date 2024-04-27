@@ -66,3 +66,21 @@ class Cliente(models.Model):
             self.veganos)
 
 
+
+class Product(models.Model):
+    productname = models.CharField(max_length=200,verbose_name="Produto")
+    price = models.DecimalField(max_digits=5, decimal_places=2,verbose_name="Preço")
+    quantidade = models.IntegerField()
+    alergenico = models.BooleanField(default=False, verbose_name="Alergenico")
+    vegano = models.BooleanField(default=False, verbose_name="Vegano")
+   # image = models.CharField(max_length=5000, null=True, blank=True)
+    id_registro = models.AutoField(primary_key=True)
+
+    def __str__(self):
+        return "ID: {}, Produto: {}, Preço: {}, AlergênZico: {}, Vegano: {} , Quantidade:{}".format(
+            self.id_registro,
+            self.productname,
+            self.price,
+            self.alergenico,
+            self.vegano,
+            self.quantidade)

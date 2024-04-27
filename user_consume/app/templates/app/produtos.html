@@ -1,0 +1,43 @@
+{% extends 'app/base_app.html' %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'app/styles.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h2 class="title">Cadastrar Novo Produto</h2>
+        <form method="post" action="{% url 'cadastrarproduto' %}" class="form2">
+            {% csrf_token %}
+            {{ form2.as_p }}
+            <button type="submit" class="button">Adicionar Produto</button>
+        </form>
+
+        <h2 class="title">Lista de Produtos</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Preço</th>
+                    <th>quantidade</th>
+                    <th>Alergênico</th>
+                    <th>Vegano</th>
+                    <th>ID de Registro</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for produto20 in produtos20 %}
+                    <tr>
+                        <td>{{ produto20.productname }}</td>
+                        <td>{{ produto20.price }}</td>
+                        <td>{% if produto20.alergenico %} Sim {% else %} Não {% endif %}</td>
+                        <td>{% if produto20.vegano %} Sim {% else %} Não {% endif %}</td>
+                        <td>{{ produto20.id_registro }}</td>
+                        <td>{{ produto20.quantidade }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

@@ -13,4 +13,6 @@ urlpatterns = [
     path('update/<int:cliente_id>/', views.update, name='update_cliente'),
     path('modelform/', views.form_modelform, name ="form_modelform"),
     # path('list/<int:list_id>/', views.client_list, name='todo_list'),
+    path('produtos/', views.products, name="Produtos"),
+    path('cadastrar-produto/', views.form_modelformproduto, name='cadastrarproduto'),
 ]

@@ -1,5 +1,5 @@
 from django import forms
-from .models import Cliente
+from .models import Cliente, Product
 
 
 SEXO_CHOICES = (
@@ -26,3 +26,8 @@ class ClienteForm(forms.ModelForm):
         model = Cliente
         fields = "__all__"
         # exclude = ("id_registro")
+
+class ProductForm(forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = "__all__"
