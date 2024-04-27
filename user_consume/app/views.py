@@ -2,8 +2,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from .models import CustomUserCreationForm
 from django.shortcuts import render, redirect, HttpResponse,get_object_or_404
-from .forms import ClienteForm
-from .models import Cliente
+from .forms import ClienteForm, ProductForm
+from .models import Cliente, Product
 from django.urls import reverse_lazy
 
 # Create your views here.
@@ -14,7 +14,7 @@ def index(request):
         'clientes': clientes,
         'user': request.user  # Passa o usuário autenticado para o template
     }
-    return render(request, 'app/app_index.html', context)
+    return render(request, 'app/app_cliente.html', context)
 
 def signup(request):
     if request.method == 'POST':
@@ -46,28 +46,6 @@ def not_found(request, exception):
 
 def pagina_principal(request):
     return render(request, 'app/pagina_principal.html')
-
-
-def clientes(request):
-    context = {
-        'clientes': clientes,
-        'user': request.user  # Passa o usuário autenticado para o template
-    }
-    return render(request, 'app/clientes.html', context)
-
-# def pedidos(request):
-#     context = {
-#         'clientes': clientes,
-#         'user': request.user  # Passa o usuário autenticado para o template
-#     }
-#     return render(request, 'app/pedidos.html', context)
-
-# def produtos(request):
-#     context = {
-#         'clientes': clientes,
-#         'user': request.user  # Passa o usuário autenticado para o template
-#     }
-#     return render(request, 'app/produtos.html', context)
 
 
 def form_modelform(request):
@@ -114,10 +92,31 @@ def update(request, cliente_id):
 def delete_cliente(request, cliente_id):
     cliente = Cliente.objects.get(id_registro=cliente_id)
     cliente.delete()
-    return redirect('app_index')
+    return redirect('app_cliente')
 
+def products(request):
+    produtos = Product.objects.all()
+    context = {
+        'produtos': produtos,
+        'user': request.user  # Passa o usuário autenticado para o template
+    }
+    return render(request, 'app/app_produtos.html', context)
 
-def delete_clientetete(request, cliente_id):
-    clienteeee = Clienteeee.objects.get(id_registro=cliente_id)
-    clienteeee.delete()
-    return redirect('app_index')
+def form_modelformproduto(request):
+    if request.method == "GET":
+        form = ProductForm()
+
+    else:  # Método POST
+        form = ProductForm(request.POST)
+        if form.is_valid():
+            produto = form.save(commit=False)  # Evita salvar imediatamente para configurar id_registro
+            produto.save()  # Salva o cliente e gera o id_registro automaticamente
+            # form.save()
+            form = ProductForm()
+
+    produtos = Product.objects.all()
+    context = {
+        'form': form,
+        'produtos': produtos
+    }
+    return render(request, 'app/formulario_modelformprod.html', context=context)

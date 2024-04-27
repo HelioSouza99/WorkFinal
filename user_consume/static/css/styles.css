@@ -60,3 +60,24 @@ th {
     text-decoration: none; /* Remove a decoração de link */
     margin-left: 10px; /* Espaçamento à esquerda do ícone */
 }
+
+
+.form-group {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    flex-basis: 200px;
+    margin-right: 20px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    flex-grow: 1;
+    padding: 5px;
+}
