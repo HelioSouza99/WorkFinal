@@ -1,25 +1,5 @@
 from django import forms
-from .models import Cliente
-
-
-SEXO_CHOICES = (
-    ('M', 'Masculino'),
-    ('F', 'Feminino'),
-    ('O', 'Outros'),
-)
-
-BOOL = (
-    ("S", "SIM"),
-    ("N", "NÃO"),
-)
-
-class MeuFormulario(forms.Form):
-    nome = forms.CharField(max_length=100)
-    sexo = forms.ChoiceField(choices=SEXO_CHOICES)
-    maioridade = forms.ChoiceField(choices=BOOL)
-    alergia_gluten = forms.ChoiceField(choices=BOOL)
-    veganos = forms.ChoiceField(choices=BOOL)
-
+from .models import Cliente, Product
 
 class ClienteForm(forms.ModelForm):
     class Meta:
@@ -27,8 +7,10 @@ class ClienteForm(forms.ModelForm):
         fields = "__all__"
         # exclude = ("id_registro")
 
-class ClientesForm(forms.ModelForm):
+
+class ProductForm(forms.ModelForm):
     class Meta:
-        model = Clientes
-        fields = "__all__"
-        # exclude = ("id_registro")
+        model = Product
+        fields = '__all__'  # Para incluir todos os campos do modelo
+        # Ou especifique os campos manualmente:
+        # fields = ['productname', 'description', 'price', 'available', 'category', 'ingredients', 'image', 'discount', 'rating', 'preparation_time', 'calories']

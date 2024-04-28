@@ -1,0 +1,50 @@
+{% extends 'app/base_app.html' %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'app/styles.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <a href="{% url 'pagina_principal' %}" class="back-button"><i class="fa fa-arrow-left"></i> Voltar</a>
+
+        <h2 class="title">Lista de Produtos</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Preço</th>
+                    <th>Disponibilidade</th>
+                    <th>Categoria</th>
+                    <th>Alergênico</th>
+                    <th>Vegano</th>
+                    <th>Ações</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                {% for produto in produtos %}
+                <tr>
+                    <td>{{ produto.productname }}</td>
+                    <td>{{ produto.price }}</td>
+                    <td>{% if produto.available %} Sim {% else %} Não {% endif %}</td>
+                    <td>{{ produto.get_category_display }}</td>
+                    <td>{% if produto.alergia_gluten %} Sim {% else %} Não {% endif %}</td>
+                    <td>{% if produto.veganos %} Sim {% else %} Não {% endif %}</td>
+                    <td>Teste</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <h2 class="title">Cadastrar Novo Produto</h2>
+        <form method="post" action="{% url 'cadastrarproduto' %}" class="form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="button">Adicionar Produto</button>
+        </form>
+    </div>
+
+
+{% endblock %}
