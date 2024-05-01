@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django import forms
 from django.contrib.auth.models import User
-from django.core.validators import MinValueValidator, MaxValueValidator
+import datetimefrom django.core.validators import MinValueValidator, MaxValueValidator
 
 class User(AbstractUser):
     def __str__(self):
@@ -58,13 +58,8 @@ class Cliente(models.Model):
     id_registro = models.AutoField(primary_key=True)
 
     def __str__(self):
-        return "ID: {}, Nome: {}, Sexo: {}, Maioridade: {}, Alergia: {}, Vegano: {}".format(
-            self.id_registro,
-            self.nome, 
-            self.sexo,
-            self.maioridade,
-            self.alergia_gluten,
-            self.veganos)
+        return f'{self.nome}'
+
 
 
 class Product(models.Model):
@@ -73,16 +68,31 @@ class Product(models.Model):
         ('Pratos Principais', 'Pratos Principais'),
         ('Sobremesas', 'Sobremesas'),
     ]
-
-    productname = models.CharField(max_length=200, verbose_name="Produto")
-    price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Preço", validators=[MinValueValidator(0.0)])
-    available = models.BooleanField(default=False, verbose_name="Disponível")
-    category = models.CharField(max_length=50, choices=CATEGORIES, verbose_name="Categoria")
-    image = models.ImageField(upload_to='product_images/', null=True, blank=True, verbose_name="Imagem")
+    productname = models.CharField(max_length=200,verbose_name="Produto")
+    price = models.DecimalField(max_digits=5, decimal_places=2,verbose_name="Preço")
+    quantidade = models.IntegerField()
+    alergenico = models.BooleanField(default=False, verbose_name="Alergenico")
+    vegano = models.BooleanField(default=False, verbose_name="Vegano")
+   # image = models.CharField(max_length=5000, null=True, blank=True)
     id_registro = models.AutoField(primary_key=True)
+    category = models.CharField(default = False ,max_length=50, choices=CATEGORIES, verbose_name="Categoria")
     alergia_gluten = models.BooleanField(default=False, verbose_name="Alergia")
-    veganos = models.BooleanField(default=False, verbose_name="Vegano")
 
     def __str__(self):
-        return f"{self.productname} - {self.category}"
-    
+        return f'{self.productname}'
+
+
+class Orders(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
+    quantidade = models.IntegerField()
+    date = models.DateTimeField(auto_now_add=True)
+
+
+    def __str__(self):
+        return f'{self.product}'
+   # def placeOrder(self):
+ #       self.save()
+ #   @staticmethod
+#    def get_orders_by_customer(cliente_id):
+ #       return Orders.objects.filter(cliente=cliente_id).order_by('-date')

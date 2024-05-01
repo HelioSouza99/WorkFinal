@@ -18,5 +18,14 @@ urlpatterns = [
 
     path('produtos/', views.products, name="app_produtos"),
     path('cadastrar-produto/', views.form_modelformproduto, name='cadastrarproduto'),
+    path('produtos/', views.products, name="Produtos"),
+    path('cadastrar-produto/', views.form_modelformproduto, name='cadastrarproduto'),
+    path('update-produto/<int:produto_id>/', views.updateprod, name='update_produto'),
+    path('delete-produto/<int:produto_id>/', views.delete_produto, name='delete_produto'),
+
+    path('pedidos/', views.listar_pedidos, name='listar_pedidos'),
+    path('cadastrar-pedido/', views.form_modelformpedidos, name='adicionar_pedidos'),
+    path('pedidos/update-pedido/<int:pedido_id>/', views.updatepedido, name='update_pedido'),
+    path('pedidos/delete-pedido/<int:pedido_id>/', views.delete_pedido, name='delete_pedido'),
 ]
 

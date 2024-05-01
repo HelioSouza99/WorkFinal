@@ -2,8 +2,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from .models import CustomUserCreationForm
 from django.shortcuts import render, redirect, HttpResponse,get_object_or_404
-from .forms import ClienteForm, ProductForm
-from .models import Cliente, Product
+from .forms import ClienteForm, ProductForm, OrdersForm
+from .models import Cliente, Product, Orders
 from django.urls import reverse_lazy
 
 # Create your views here.
@@ -92,31 +92,116 @@ def update(request, cliente_id):
 def delete_cliente(request, cliente_id):
     cliente = Cliente.objects.get(id_registro=cliente_id)
     cliente.delete()
-    return redirect('app_cliente')
+    return redirect('app_index')
 
 def products(request):
-    produtos = Product.objects.all()
-    context = {
-        'produtos': produtos,
-        'user': request.user  # Passa o usuário autenticado para o template
-    }
-    return render(request, 'app/app_produtos.html', context)
+    produtos20 = Product.objects.all()
+    return render(request, 'app/produtos.html', context={'produtos20': produtos20})
+
+
 
 def form_modelformproduto(request):
     if request.method == "GET":
-        form = ProductForm()
+        form2 = ProductForm()
 
     else:  # Método POST
-        form = ProductForm(request.POST)
-        if form.is_valid():
-            produto = form.save(commit=False)  # Evita salvar imediatamente para configurar id_registro
-            produto.save()  # Salva o cliente e gera o id_registro automaticamente
-            # form.save()
-            form = ProductForm()
+        form2 = ProductForm(request.POST)
+        if form2.is_valid():
+            produto20 = form2.save(commit=False)  # Evita salvar imediatamente para configurar id_registro
+            produto20.save()  # Salva o cliente e gera o id_registro automaticamente
+            form2.save()
+            form2 = ProductForm()
 
-    produtos = Product.objects.all()
+    produtos20 = Product.objects.all()
     context = {
-        'form': form,
-        'produtos': produtos
+        'form2': form2,
+        'produtos20': produtos20
     }
     return render(request, 'app/formulario_modelformprod.html', context=context)
+
+def delete_produto(request, produto_id):
+    produto = Product.objects.get(id_registro=produto_id)
+    produto.delete()
+    return redirect('Produtos')
+
+
+
+def updateprod(request, produto_id):
+    produtos20 = Product.objects.all()  #Todos  # Move a atribuição para fora do bloco `elif`
+    if request.method == "GET":
+        produto20 = Product.objects.filter(id_registro=produto_id).first() #!produto filtrado
+        form2 = ProductForm(instance=produto20)
+        context = {
+            'form2': form2,
+            'produtos20': produtos20,
+        }
+        return render(request, 'app/formulario_modelformprod.html', context=context)
+    elif request.method == "POST":
+        produto20 = Product.objects.filter(id_registro=produto_id).first()
+        form2 = ProductForm(request.POST, instance=produto20)
+        if form2.is_valid():
+            produto20 = form2.save()
+            return redirect('update_produto', produto_id=produto_id)
+        else:
+            context = {
+                'form2': form2,
+                'produtos20': produtos20,
+            }
+            return render(request, 'app/formulario_modelformprod.html', context=context)
+
+
+
+def listar_pedidos(request):
+    ordens = Orders.objects.all()
+    context = {
+        'ordens': ordens
+    }
+    return render(request, 'app/pedidos.html', context=context)
+
+def form_modelformpedidos(request):
+    if request.method == "GET":
+        form3 = OrdersForm()
+    else:  # Método POST
+        form3 = OrdersForm(request.POST)
+        if form3.is_valid():
+            ordem = form3.save(commit=False)  # Evita salvar imediatamente para configurar id_registro
+            ordem.save()  # Salva o cliente e gera o id_registro automaticamente
+            form3.save()
+            form3 = OrdersForm()
+
+    ordens = Orders.objects.all()
+    context = {
+        'form3': form3,
+        'ordens': ordens
+    }
+    return render(request, 'app/formulario_modelformorders.html', context=context)
+
+def delete_pedido(request, pedido_id):
+    ordem = Orders.objects.get(id=pedido_id)
+    ordem.delete()
+    return redirect('listar_pedidos')
+
+
+
+def updatepedido(request,pedido_id):
+    ordens = Orders.objects.all()  #Todos  # Move a atribuição para fora do bloco `elif`
+    if request.method == "GET":
+        ordem = Orders.objects.filter(id=pedido_id).first() #!pedido acessado pelo ID
+        form3 = OrdersForm(instance=ordem)
+        context = {
+            'form3': form3,
+            'ordens': ordens,
+        }
+        return render(request, 'app/formulario_modelformorders.html', context=context)
+    elif request.method == "POST":
+        ordem = Orders.objects.filter(id=pedido_id).first()
+        form3 = OrdersForm(request.POST, instance=ordem)
+        if form3.is_valid():
+            ordem = form3.save()
+            return redirect('update_pedido', pedido_id=pedido_id)
+        else:
+            context = {
+                'form3': form3,
+                'ordens': ordens,
+            }
+            return render(request, 'app/formulario_modelformorders.html', context=context)
