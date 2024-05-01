@@ -20,10 +20,12 @@
                 <tr>
                     <th>Nome</th>
                     <th>Preço</th>
-                    <th>quantidade</th>
                     <th>Alergênico</th>
                     <th>Vegano</th>
                     <th>ID de Registro</th>
+                    <th>quantidade</th>
+                    <th>Categoria</th>
+                    <th>Alergia Gluten</th>
                 </tr>
             </thead>
             <tbody>
@@ -35,6 +37,17 @@
                         <td>{% if produto20.vegano %} Sim {% else %} Não {% endif %}</td>
                         <td>{{ produto20.id_registro }}</td>
                         <td>{{ produto20.quantidade }}</td>
+                        <td>{{ produto20.category }}</td>
+                        <td>{{ produto20.alergia_gluten }}</td>
+                                                <!-- Remove a coluna ID de Registro -->
+                        <td>
+
+                            <a href="{% url 'update_produto' produto_id=produto20.id_registro %}">Edit</a>
+                            <a href="{% url 'delete_produto' produto_id=produto20.id_registro %}" class="delete-button">
+                                <i class="fa fa-trash"></i> Excluir
+                            </a>
+                            <a> Pedido </a>
+                        </td>
                     </tr>
                 {% endfor %}
             </tbody>

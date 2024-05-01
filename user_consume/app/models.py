@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django import forms
 from django.contrib.auth.models import User
-
+import datetime
 class User(AbstractUser):
     def __str__(self):
         return f'{self.first_name} {self.last_name}'
@@ -57,17 +57,16 @@ class Cliente(models.Model):
     id_registro = models.AutoField(primary_key=True)
 
     def __str__(self):
-        return "ID: {}, Nome: {}, Sexo: {}, Maioridade: {}, Alergia: {}, Vegano: {}".format(
-            self.id_registro,
-            self.nome, 
-            self.sexo,
-            self.maioridade,
-            self.alergia_gluten,
-            self.veganos)
+        return f'{self.nome}'
 
 
 
 class Product(models.Model):
+    CATEGORIES = [
+        ('Bebidas', 'Bebidas'),
+        ('Pratos Principais', 'Pratos Principais'),
+        ('Sobremesas', 'Sobremesas'),
+    ]
     productname = models.CharField(max_length=200,verbose_name="Produto")
     price = models.DecimalField(max_digits=5, decimal_places=2,verbose_name="Preço")
     quantidade = models.IntegerField()
@@ -75,12 +74,24 @@ class Product(models.Model):
     vegano = models.BooleanField(default=False, verbose_name="Vegano")
    # image = models.CharField(max_length=5000, null=True, blank=True)
     id_registro = models.AutoField(primary_key=True)
+    category = models.CharField(default = False ,max_length=50, choices=CATEGORIES, verbose_name="Categoria")
+    alergia_gluten = models.BooleanField(default=False, verbose_name="Alergia")
 
     def __str__(self):
-        return "ID: {}, Produto: {}, Preço: {}, AlergênZico: {}, Vegano: {} , Quantidade:{}".format(
-            self.id_registro,
-            self.productname,
-            self.price,
-            self.alergenico,
-            self.vegano,
-            self.quantidade)
+        return f'{self.productname}'
+
+
+class Orders(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
+    quantidade = models.IntegerField()
+    date = models.DateTimeField(auto_now_add=True)
+
+
+    def __str__(self):
+        return f'{self.product}'
+   # def placeOrder(self):
+ #       self.save()
+ #   @staticmethod
+#    def get_orders_by_customer(cliente_id):
+ #       return Orders.objects.filter(cliente=cliente_id).order_by('-date')

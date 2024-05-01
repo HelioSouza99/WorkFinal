@@ -1,5 +1,5 @@
 from django import forms
-from .models import Cliente, Product
+from .models import Cliente, Product, Orders
 
 
 SEXO_CHOICES = (
@@ -30,4 +30,9 @@ class ClienteForm(forms.ModelForm):
 class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
+        fields = "__all__"
+
+class OrdersForm(forms.ModelForm):
+    class Meta:
+        model = Orders
         fields = "__all__"
