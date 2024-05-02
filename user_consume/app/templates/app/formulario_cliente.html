@@ -3,7 +3,7 @@
 {% block content %}
     <div class="container">
         <a href="{% url 'app_cliente' %}" class="back-button"><i class="fa fa-arrow-left"></i> Voltar</a>
-        <h1 class="title">ModelForm</h1>
+        <h1 class="title">Cadastro de Clientes</h1>
         <form action="." method="post" class="form">
             {% csrf_token %}
             {{ form.as_p }}

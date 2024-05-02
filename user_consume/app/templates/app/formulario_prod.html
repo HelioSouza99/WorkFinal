@@ -2,11 +2,11 @@
 
 {% block content %}
     <div class="container">
-        <a href="{% url 'Produtos' %}" class="back-button"><i class="fa fa-arrow-left"></i> Voltar</a>
+        <a href="{% url 'app_produtos' %}" class="back-button"><i class="fa fa-arrow-left"></i> Voltar</a>
         <h1 class="title">Cadastro de Produtos</h1>
-        <form action="." method="post" class="form2">
+        <form action="." method="post" class="form_produto">
             {% csrf_token %}
-            {{ form2.as_p }}
+            {{ form_produto.as_p }}
             <input type="submit" value="Save" class="button">
         </form>
     </div>

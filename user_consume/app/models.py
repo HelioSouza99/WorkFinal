@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django import forms
 from django.contrib.auth.models import User
-import datetimefrom django.core.validators import MinValueValidator, MaxValueValidator
+
 
 class User(AbstractUser):
     def __str__(self):
@@ -60,8 +60,6 @@ class Cliente(models.Model):
     def __str__(self):
         return f'{self.nome}'
 
-
-
 class Product(models.Model):
     CATEGORIES = [
         ('Bebidas', 'Bebidas'),
@@ -73,7 +71,6 @@ class Product(models.Model):
     quantidade = models.IntegerField()
     alergenico = models.BooleanField(default=False, verbose_name="Alergenico")
     vegano = models.BooleanField(default=False, verbose_name="Vegano")
-   # image = models.CharField(max_length=5000, null=True, blank=True)
     id_registro = models.AutoField(primary_key=True)
     category = models.CharField(default = False ,max_length=50, choices=CATEGORIES, verbose_name="Categoria")
     alergia_gluten = models.BooleanField(default=False, verbose_name="Alergia")
@@ -91,8 +88,3 @@ class Orders(models.Model):
 
     def __str__(self):
         return f'{self.product}'
-   # def placeOrder(self):
- #       self.save()
- #   @staticmethod
-#    def get_orders_by_customer(cliente_id):
- #       return Orders.objects.filter(cliente=cliente_id).order_by('-date')

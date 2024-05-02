@@ -1,0 +1,5 @@
+entyender os serializs=ers
+autentificacao de login sem nenhum registro no banco de dados
+Pedidos
+
+python manage.py migrate --run-syncdb 

@@ -7,22 +7,16 @@
 
 {% block content %}
     <div class="container">
-        <h2 class="title">Cadastrar Novo Pedido</h2>
-        <form method="post" action="{% url 'adicionar_pedidos' %}" class="form3">
-            {% csrf_token %}
-            {{ form3.as_p }}
-            <button type="submit" class="button">Adicionar Pedido</button>
-        </form>
-
+        <a href="{% url 'app_cliente' %}" class="back-button"><i class="fa fa-arrow-left"></i> Voltar</a>
         <h2 class="title">Lista de Pedidos</h2>
         <table>
             <thead>
                 <tr>
                     <th>Cliente</th>
-                    <th>Produto Consumido</th>
+                    <th>Produto </th>
                     <th>Quantidade</th>
                     <th>Horário</th>
-
+                    <th>Ações</th>
                 </tr>
             </thead>
             <tbody>
@@ -32,15 +26,22 @@
                         <td>{{ ordem.product.productname }}</td>
                         <td>{{ ordem.quantidade}}</td>
                         <td>{{ ordem.date }}</td>
-
-                                                <!-- Remove a coluna ID de Registro -->
                         <td>
                             <a href="{% url 'update_pedido' pedido_id=ordem.id %}">Editar</a>
-                            <a href="{% url 'delete_pedido' pedido_id=ordem.id %}">Delete</a>
+                            <a href="{% url 'delete_pedido' pedido_id=ordem.id %}" class="delete-button">
+                                <i class="fa fa-trash"></i> Excluir
+                            </a>
                         </td>
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
+
+        <h2 class="title">Cadastrar Novo Pedido</h2>
+        <form method="post" action="{% url 'adicionar_pedidos' %}" class="form_pedidos">
+            {% csrf_token %}
+            {{ form_pedidos.as_p }}
+            <button type="submit" class="button">Adicionar Pedido</button>
+        </form>
     </div>
 {% endblock %}

@@ -35,7 +35,7 @@
                             <a href="{% url 'delete_cliente' cliente_id=cliente.id_registro %}" class="delete-button">
                                 <i class="fa fa-trash"></i> Excluir
                             </a>
-                            <a> Pedido </a>
+                            <a href="{% url 'listar_pedidos' %}">Pedido </a>
                         </td>
                         
                     </tr>
@@ -43,11 +43,10 @@
             </tbody>
         </table>
 
-        <h2 class="title">Cadastrar Novo Cliente</h2>
         <form method="post" action="{% url 'cadastrar-cliente' %}" class="form">
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit" class="button">Adicionar Cliente</button>
+            <button type="submit" class="button">Novo Cliente</button>
         </form>
     </div>
 
