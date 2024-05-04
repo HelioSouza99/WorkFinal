@@ -35,7 +35,8 @@
                             <a href="{% url 'delete_cliente' cliente_id=cliente.id_registro %}" class="delete-button">
                                 <i class="fa fa-trash"></i> Excluir
                             </a>
-                            <a href="{% url 'listar_pedidos' %}">Pedido </a>
+                            <a href="{% url 'filtro_pedidos' cliente_id=cliente.id_registro %}">Pedido</a>
+
                         </td>
                         
                     </tr>

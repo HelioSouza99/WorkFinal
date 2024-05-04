@@ -7,8 +7,7 @@
 
 {% block content %}
     <div class="container">
-
-        <a href="{% url 'pagina_principal' %}" class="back-button"><i class="fa fa-arrow-left"></i> Voltar</a>
+        <a href="{% url 'app_cliente' %}" class="back-button"><i class="fa fa-arrow-left"></i> Voltar</a>
         <h2 class="title">Lista de Pedidos</h2>
         <table>
             <thead>
@@ -40,10 +39,6 @@
             </tbody>
         </table>
 
-        <form method="post" action="{% url 'adicionar_pedidos' %}" class="form_pedidos">
-            {% csrf_token %}
-            {{ form_pedidos.as_p }}
-            <button type="submit" class="button">Novo Pedido</button>
-        </form>
+
     </div>
 {% endblock %}

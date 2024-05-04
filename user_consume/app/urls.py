@@ -25,5 +25,7 @@ urlpatterns = [
     path('cadastrar-pedido/', views.form_order, name='adicionar_pedidos'),
     path('pedidos/update-pedido/<int:pedido_id>/', views.update_order, name='update_pedido'),
     path('pedidos/delete-pedido/<int:pedido_id>/', views.delete_order, name='delete_pedido'),
+
+    path('base-produtos/<int:cliente_id>/', views.listar_pedidos_filtro_cliente, name='filtro_pedidos'),
 ]
 

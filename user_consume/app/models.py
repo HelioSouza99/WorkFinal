@@ -68,13 +68,11 @@ class Product(models.Model):
     ]
     productname = models.CharField(max_length=200,verbose_name="Produto")
     price = models.DecimalField(max_digits=5, decimal_places=2,verbose_name="Preço")
-    quantidade = models.IntegerField()
-    alergenico = models.BooleanField(default=False, verbose_name="Alergenico")
     vegano = models.BooleanField(default=False, verbose_name="Vegano")
     id_registro = models.AutoField(primary_key=True)
     category = models.CharField(default = False ,max_length=50, choices=CATEGORIES, verbose_name="Categoria")
     alergia_gluten = models.BooleanField(default=False, verbose_name="Alergia")
-
+    # quantidade = models.IntegerField(default=1, verbose_name="Quantidade")
     def __str__(self):
         return f'{self.productname}'
 

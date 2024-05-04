@@ -165,6 +165,28 @@ def listar_pedidos(request):
     }
     return render(request, 'app/app_pedidos.html', context=context)
 
+@login_required
+def listar_pedidos_filtro_cliente(request, cliente_id):
+    cliente_filter = Cliente.objects.filter(id_registro=cliente_id).first() #! cliente filtrado
+    if cliente_filter:
+        # Filtra os produtos com base nas características do cliente
+        produtos = Product.objects.filter(
+            alergia_gluten=cliente_filter.alergia_gluten,  # Corrigido para 'alergia_gluten'
+            vegano=cliente_filter.veganos,
+        )
+        ordens = Orders.objects.filter(
+            cliente=cliente_filter
+        )
+        context = {
+            'ordens': ordens,
+            'produtos': produtos,
+            'clientes': cliente_filter,
+        }
+        return render(request, 'app/app_pedidos_filter.html', context=context)
+    else:
+        # Cliente não encontrado
+        return HttpResponse("Cliente não encontrado", status=404)
+
 
 def form_order(request):
     if request.method == "GET":
